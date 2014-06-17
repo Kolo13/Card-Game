@@ -1,0 +1,152 @@
+<script>
+	function Deck() {
+		this.cards = [];
+		this.count = function() {
+			return this.cards.length;
+		}
+		this.init = function() {
+			for (s = 1; s <= 4; s++) {
+				for (r = 1; r <= 13; r++) { 
+					this.cards.push(new Card(r,s))
+				}
+			}
+		}
+		this.shuffle = function(numShuffles) {
+			for (j = 1; j <= numShuffles; j++) {
+				for (i = this.cards.length; i >= 0; i--) {
+					this.randNum = (Math.floor((Math.random()*i)));
+					this.cards.push(this.cards[this.randNum]);
+					this.cards.splice(this.randNum,1);
+				}
+			}
+		}		
+	}
+
+	function Card(rank, suit) {
+		this.rank = rank;
+		this.suit = suit;
+		this.show = function() {
+			var r;
+			var s;
+			switch (this.suit) {
+				case 1:
+					s = "Hearts"
+					break;
+				case 2:
+					s = "Diamonds"
+					break;
+				case 3:
+					s = "Spades"
+					break;
+				case 4:
+					s = "Clubs"
+					break;
+			}
+
+			switch (this.rank) {
+				case 1:
+					r = "2"
+					break;
+				case 2:
+					r = "3"
+					break;
+				case 3:
+					r = "4"
+					break;
+				case 4:
+					r = "5"
+					break;
+				case 5:
+					r = "6"
+					break;
+				case 6:
+					r = "7"
+					break;
+				case 7:
+					r = "8"
+					break;
+				case 8:
+					r = "9"
+					break;
+				case 9:
+					r = "10"
+					break;
+				case 10:
+					r = "Jack"
+					break;
+				case 11:
+					r = "Queen"
+					break;
+				case 12:
+					r = "King"
+					break;
+				case 13:
+					r = "Ace"
+					break;
+			}
+
+		return(r + " of " + s);
+		}		
+	}
+
+	function Player() {
+		this.name = "";
+		this.hand = [];
+		this.pile = [];
+		this.isWinner = false;
+	}
+
+	function CardGame(numPlayers) {
+		this.player = [];
+		this.deck = new Deck();
+		this.numPlayers = numPlayers;
+		this.init = function() {
+			this.deck.init();
+			for (j = 0; j < numPlayers; j++) {
+				this.player.push(new Player());
+				this.player[j].name = ("Player" + (j + 1));
+			}
+		}
+		this.deal = function() {
+			var x = 0;
+			for (i = this.deck.cards.length; i > 0; i--) {
+				if (x < (this.player.length)) {
+					this.player[x].pile.push(this.deck.cards[this.deck.cards.length - 1]);
+					x++;
+				} else {
+					x = 0
+					this.player[x].pile.push(this.deck.cards[this.deck.cards.length - 1]) 
+					x++;
+				}
+			this.deck.cards.pop(); 
+			}
+		}
+		this.play = function() {
+			console.log("--------------------------------------------------" );
+			console.log("The high card wins.  You are Player 1.  GOOD LUCK!");
+			console.log("--------------------------------------------------");
+
+			for (i = 0; i < this.player.length; i++) {
+				console.log(this.player[i].name + " has " + this.player[i].pile[0].show());
+			}
+
+			console.log("--------------------------------------------------" );
+
+			if (this.player[0].pile[0].rank != this.player[1].pile[0].rank) {
+				if (this.player[0].pile[0].rank > this.player[1].pile[0].rank) {
+					console.log(this.player[0].name + " is the winner!");
+				} else {
+					console.log(this.player[1].name + " is the winner!");
+				}
+			} else {
+				console.log("It's a tie!")
+			}
+		}		
+	}
+
+	oneCardGame = new CardGame(2);
+	oneCardGame.init();
+	oneCardGame.deck.shuffle(2);
+	oneCardGame.deal();
+	oneCardGame.play();
+</script>
