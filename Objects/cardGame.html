@@ -5,8 +5,8 @@
 			return this.cards.length;
 		}
 		this.init = function() {
-			for (s = 1; s <= 4; s++) {
-				for (r = 1; r <= 13; r++) { 
+			for (s = 0; s <= 3; s++) {
+				for (r = 0; r <= 12; r++) { 
 					this.cards.push(new Card(r,s))
 				}
 			}
@@ -26,66 +26,10 @@
 		this.rank = rank;
 		this.suit = suit;
 		this.show = function() {
-			var r;
-			var s;
-			switch (this.suit) {
-				case 1:
-					s = "Hearts"
-					break;
-				case 2:
-					s = "Diamonds"
-					break;
-				case 3:
-					s = "Spades"
-					break;
-				case 4:
-					s = "Clubs"
-					break;
-			}
+			var r = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"];
+			var s = ["Hearts", "Diamonds", "Spades", "Clubs"];
 
-			switch (this.rank) {
-				case 1:
-					r = "2"
-					break;
-				case 2:
-					r = "3"
-					break;
-				case 3:
-					r = "4"
-					break;
-				case 4:
-					r = "5"
-					break;
-				case 5:
-					r = "6"
-					break;
-				case 6:
-					r = "7"
-					break;
-				case 7:
-					r = "8"
-					break;
-				case 8:
-					r = "9"
-					break;
-				case 9:
-					r = "10"
-					break;
-				case 10:
-					r = "Jack"
-					break;
-				case 11:
-					r = "Queen"
-					break;
-				case 12:
-					r = "King"
-					break;
-				case 13:
-					r = "Ace"
-					break;
-			}
-
-		return(r + " of " + s);
+			return (r[this.rank] + " " + s[this.suit]);
 		}		
 	}
 
@@ -144,7 +88,7 @@
 		}		
 	}
 
-	oneCardGame = new CardGame(2);
+	oneCardGame = new CardGame(4);
 	oneCardGame.init();
 	oneCardGame.deck.shuffle(2);
 	oneCardGame.deal();
